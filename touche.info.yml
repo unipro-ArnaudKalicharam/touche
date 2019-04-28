@@ -1,0 +1,7 @@
+name: Touché
+type: theme
+description: 'A sub-theme of Classy for Touché'
+base theme: classy
+package: Core
+version: 8.x-1.0
+core: 8.x
