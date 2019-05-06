@@ -44,7 +44,7 @@ gulp.task('browserSync', function() {
 
 gulp.task('watch', ['browserSync', 'sass'], function() {
   gulp.watch('app/assets/scss/**/*.scss', ['sass']);
-  gulp.watch('app/*.html', browserSync.reload); 
+  gulp.watch('app/*.html', browserSync.reload);
   gulp.watch('app/assets/js/**/*.js', browserSync.reload);
   gulp.watch('app/assets/img/**/*.svg', browserSync.reload);
 });
@@ -74,7 +74,7 @@ gulp.task('useref', function() {
   return gulp.src('app/*.html')
     .pipe(useref())
     .pipe(gulpIf('*.js', uglify()))
-    .pipe(gulpIf('*.css', cssnano({svgo: false})))
+    .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulp.dest('dist'))
 });
 
@@ -117,7 +117,7 @@ gulp.task('plugins', function() {
 
 gulp.task('bootstrap', function() {
   return gulp.src('app/assets/bootstrap/**/*')
-  .pipe(gulp.dest('dist/assets/bootstrap'))
+    .pipe(gulp.dest('dist/assets/bootstrap'))
 });
 
 // Build everything
@@ -125,8 +125,8 @@ gulp.task('bootstrap', function() {
 var runSequence = require('run-sequence');
 
 gulp.task('build', function(callback) {
-  runSequence('clean:dist', 
-    ['sass', 'useref', 'css', 'js', 'images', 'fonts', 'ico', 'plugins', 'bootstrap'], 
+  runSequence('clean:dist',
+    ['sass', 'useref', 'css', 'js', 'images', 'fonts', 'ico', 'plugins', 'bootstrap'],
     callback);
 });
 
@@ -136,7 +136,12 @@ gulp.task('build', function(callback) {
  */
 
 gulp.task('default', function (callback) {
-  runSequence(['sass','browserSync', 'watch'],
+  runSequence(
+    [
+      'sass',
+      'browserSync',
+      'watch',
+    ],
     callback
   )
 });

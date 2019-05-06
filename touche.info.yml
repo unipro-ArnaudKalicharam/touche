@@ -1,7 +1,23 @@
-name: Touché
+name: Touché - a Classy Subtheme
 type: theme
-description: 'A sub-theme of Classy for Touché'
-base theme: classy
-package: Core
+description: 'Bootstrap driven theme for Touché.'
 version: 8.x-1.0
 core: 8.x
+base theme: classy
+
+libraries:
+#  - touche/bootstrap_cdn
+#  - touche/google_maps
+  - touche/fontawesome
+  - touche/parallax
+  - touche/isotope
+  - touche/flickity
+  - touche/lightbox
+  - touche/reservation
+  - touche/alerts
+  - touche/global-styling
+
+regions:
+  top_brand: Branding
+  top_menu_main: "Main menu (left)"
+  top_menu_right: "Main menu (right)"

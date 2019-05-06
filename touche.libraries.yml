@@ -1,0 +1,69 @@
+global-styling:
+  version: VERSION
+  js:
+    js/theme.js: {}
+    js/custom.js: {}
+  css:
+    component:
+      css/theme.css: {}
+bootstrap:
+  js:
+    bootstrap/js/bootstrap.bundle.min.js: {}
+  css:
+    component:
+      /libraries/bootstrap/dist/css/bootstrap.min.css: {}
+bootstrap_cdn:
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js: {}
+    //stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js: {}
+  css:
+    component:
+      //stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css: {}
+color.preview:
+  version: VERSION
+  css:
+    theme:
+      color/preview.css: {}
+  js:
+    color/preview.js: {}
+  dependencies:
+    - color/drupal.color
+
+fontawesome:
+  css:
+    component:
+      plugins/font-awesome/css/font-awesome.min.css: {}
+google_maps:
+  js:
+    //maps.googleapis.com/maps/api/js?key=AIzaSyCnKt8_N4-FKOnhI_pSaDL7g_g-XI1-R9E: {}
+
+parallax:
+  js:
+    plugins/parallax/dist/jquery.parallax.min.js: {}
+
+isotope:
+  js:
+    plugins/isotope/lib/imagesloaded.pkgd.min.js: {}
+    plugins/isotope/isotope.pkgd.min.js: {}
+
+flickity:
+  js:
+    plugins/flickity/flickity.pkgd.min.js: {}
+  css:
+    component:
+      plugins/flickity/flickity.min.css: {}
+
+lightbox:
+  js:
+    plugins/lightbox/js/lightbox.min.js: {}
+  css:
+    component:
+      plugins/lightbox/css/lightbox.min.css: {}
+
+reservation:
+  js:
+    plugins/reservation/reservation.js: {}
+
+alerts:
+  js:
+    plugins/alerts/alerts.js: {}
