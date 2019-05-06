@@ -1,10 +1,11 @@
 {#
 /**
  * @file
- * Theme override to display a single page.
+ * Bootstrap Barrio's theme implementation to display a single page.
  *
  * The doctype, html, head and body tags are not in this template. Instead they
- * can be found in the html.html.twig template in this directory.
+ * can be found in the html.html.twig template normally located in the
+ * core/modules/system directory.
  *
  * Available variables:
  *
@@ -19,7 +20,12 @@
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
  *   linking to the front page. This includes the language domain or prefix.
- *
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+
  * Page content (in order of occurrence in the default page.html.twig):
  * - node: Fully loaded node, if there is an automatically-loaded node
  *   associated with the page and the node ID is the second argument in the
@@ -27,67 +33,39 @@
  *   comment/reply/12345).
  *
  * Regions:
+ * - page.top_header: Items for the top header region.
+ * - page.top_header_form: Items for the top header form region.
  * - page.header: Items for the header region.
+ * - page.header_form: Items for the header form region.
+ * - page.highlighted: Items for the highlighted region.
  * - page.primary_menu: Items for the primary menu region.
  * - page.secondary_menu: Items for the secondary menu region.
- * - page.highlighted: Items for the highlighted content region.
- * - page.help: Dynamic help text, mostly for admin pages.
+ * - page.featured_top: Items for the featured top region.
  * - page.content: The main content of the current page.
  * - page.sidebar_first: Items for the first sidebar.
  * - page.sidebar_second: Items for the second sidebar.
- * - page.footer: Items for the footer region.
+ * - page.featured_bottom_first: Items for the first featured bottom region.
+ * - page.featured_bottom_second: Items for the second featured bottom region.
+ * - page.featured_bottom_third: Items for the third featured bottom region.
+ * - page.footer_first: Items for the first footer column.
+ * - page.footer_second: Items for the second footer column.
+ * - page.footer_third: Items for the third footer column.
+ * - page.footer_fourth: Items for the fourth footer column.
+ * - page.footer_fifth: Items for the fifth footer column.
  * - page.breadcrumb: Items for the breadcrumb region.
  *
+ * Theme variables:
+ * - navbar_top_attributes: Items for the header region.
+ * - navbar_attributes: Items for the header region.
+ * - content_attributes: Items for the header region.
+ * - sidebar_first_attributes: Items for the highlighted region.
+ * - sidebar_second_attributes: Items for the primary menu region.
+ *
  * @see template_preprocess_page()
+ * @see bootstrap_barrio_preprocess_page()
  * @see html.html.twig
  */
 #}
-{#
-<div class="layout-container">
-
-  <header role="banner">
-    {{ page.header }}
-  </header>
-
-  {{ page.primary_menu }}
-  {{ page.secondary_menu }}
-
-  {{ page.breadcrumb }}
-
-  {{ page.highlighted }}
-
-  {{ page.help }}
-
-  <main role="main">
-    <a id="main-content" tabindex="-1"></a> link is in html.html.twig
-
-    <div class="layout-content">
-      {{ page.content }}
-    </div> /.layout-content
-
-    {% if page.sidebar_first %}
-      <aside class="layout-sidebar-first" role="complementary">
-        {{ page.sidebar_first }}
-      </aside>
-    {% endif %}
-
-    {% if page.sidebar_second %}
-      <aside class="layout-sidebar-second" role="complementary">
-        {{ page.sidebar_second }}
-      </aside>
-    {% endif %}
-
-  </main>
-
-  {% if page.footer %}
-    <footer role="contentinfo">
-      {{ page.footer }}
-    </footer>
-  {% endif %}
-
-</div> /.layout-container
-#}
-
 {% block head %}
   <!-- NAVBAR
 ================================================== -->
@@ -95,8 +73,7 @@
     <div class="container">
 
       <!-- Navbar: Brand -->
-      {{ page.top_brand }}
-      <a class="navbar-brand d-lg-none" href="{{ front_page }}">Touché</a>
+      <a class="navbar-brand d-lg-none" href="index.html">Touché</a>
 
       <!-- Navbar: Toggler -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +84,6 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <!-- Navbar navigation: Left -->
-
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="about-us.html">About Us</a>
@@ -127,8 +103,7 @@
         </ul>
 
         <!-- Navbar: Brand -->
-        {{ page.top_brand }}
-        <a class="navbar-brand d-none d-lg-flex" href="{{ front_page }}">
+        <a class="navbar-brand d-none d-lg-flex" href="index.html">
           Touché
         </a>
 
@@ -155,7 +130,7 @@
 {% block welcome %}
   <!-- WELCOME
 ================================================== -->
-  <section class="section section_welcome" data-parallax="scroll" data-src="{{ base_path }}{{ active_theme_path() }}/img/1.jpg">
+  <section class="section section_welcome" data-parallax="scroll" data-image-src="assets/img/1.jpg">
 
     <!-- Content -->
     <div class="section_welcome__main">
@@ -228,7 +203,6 @@
 {% endblock %}
 
 {% block content %}
-{#
   <div id="main" class="{{ container }}">
     {{ page.breadcrumb }}
     <div class="row row-offcanvas row-offcanvas-left clearfix">
@@ -254,7 +228,6 @@
       {% endif %}
     </div>
   </div>
-#}
 {% endblock %}
 
 {% block discover %}
@@ -275,7 +248,7 @@
 
           <!-- Image -->
           <div class="section_discover__img">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/2.jpg" class="img-fluid" alt="...">
+            <img src="assets/img/2.jpg" class="img-fluid" alt="...">
           </div>
 
         </div>
@@ -309,7 +282,7 @@
 
           <!-- Image -->
           <div class="section_discover__img alt">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/7.jpg" class="img-fluid" alt="...">
+            <img src="assets/img/7.jpg" class="img-fluid" alt="...">
           </div>
 
         </div>
@@ -395,7 +368,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/26.jpg" alt="...">
+                  <img src="assets/img/26.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -417,7 +390,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/31.jpg" alt="...">
+                  <img src="assets/img/31.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -439,7 +412,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/27.jpg" alt="...">
+                  <img src="assets/img/27.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -461,7 +434,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/28.jpg" alt="...">
+                  <img src="assets/img/28.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -483,7 +456,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/29.jpg" alt="...">
+                  <img src="assets/img/29.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -505,7 +478,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/28.jpg" alt="...">
+                  <img src="assets/img/28.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -527,7 +500,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/30.jpg" alt="...">
+                  <img src="assets/img/30.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -549,7 +522,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/27.jpg" alt="...">
+                  <img src="assets/img/27.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -571,7 +544,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/28.jpg" alt="...">
+                  <img src="assets/img/28.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -593,7 +566,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/29.jpg" alt="...">
+                  <img src="assets/img/29.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -615,7 +588,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/29.jpg" alt="...">
+                  <img src="assets/img/29.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -637,7 +610,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/30.jpg" alt="...">
+                  <img src="assets/img/30.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -659,7 +632,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/29.jpg" alt="...">
+                  <img src="assets/img/29.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -681,7 +654,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/28.jpg" alt="...">
+                  <img src="assets/img/28.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -703,7 +676,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/30.jpg" alt="...">
+                  <img src="assets/img/30.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -725,7 +698,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/31.jpg" alt="...">
+                  <img src="assets/img/31.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -747,7 +720,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/26.jpg" alt="...">
+                  <img src="assets/img/26.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -769,7 +742,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/31.jpg" alt="...">
+                  <img src="assets/img/31.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -791,7 +764,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/27.jpg" alt="...">
+                  <img src="assets/img/27.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -813,7 +786,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/30.jpg" alt="...">
+                  <img src="assets/img/30.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -835,7 +808,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/31.jpg" alt="...">
+                  <img src="assets/img/31.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -857,7 +830,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/26.jpg" alt="...">
+                  <img src="assets/img/26.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -879,7 +852,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/26.jpg" alt="...">
+                  <img src="assets/img/26.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -901,7 +874,7 @@
             <div class="row">
               <div class="col-3 align-self-center">
                 <div class="section_menu__item__img">
-                  <img src="{{ base_path }}{{ active_theme_path() }}/img/27.jpg" alt="...">
+                  <img src="assets/img/27.jpg" alt="...">
                 </div>
               </div>
               <div class="col-7">
@@ -953,7 +926,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/26.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/26.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -966,7 +939,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/27.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/27.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -979,7 +952,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/28.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/28.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -992,7 +965,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/29.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/29.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -1005,7 +978,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/30.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/30.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -1018,7 +991,7 @@
       <div class="section_dishes__carousel__item">
 
         <!-- Image -->
-        <img src="{{ base_path }}{{ active_theme_path() }}/img/31.jpg" alt="..." class="section_dishes__carousel__item__img">
+        <img src="assets/img/31.jpg" alt="..." class="section_dishes__carousel__item__img">
 
         <!-- Body -->
         <div class="section_dishes__carousel__item__body">
@@ -1151,7 +1124,7 @@
 
                   <!-- Photo -->
                   <div class="section_testimonials__photo">
-                    <img src="{{ base_path }}{{ active_theme_path() }}/img/20.jpg" class="img-fluid" alt="...">
+                    <img src="assets/img/20.jpg" class="img-fluid" alt="...">
                   </div>
 
                 </div>
@@ -1177,7 +1150,7 @@
 
                   <!-- Photo -->
                   <div class="section_testimonials__photo">
-                    <img src="{{ base_path }}{{ active_theme_path() }}/img/21.jpg" class="img-fluid" alt="...">
+                    <img src="assets/img/21.jpg" class="img-fluid" alt="...">
                   </div>
 
                 </div>
@@ -1203,7 +1176,7 @@
 
                   <!-- Photo -->
                   <div class="section_testimonials__photo">
-                    <img src="{{ base_path }}{{ active_theme_path() }}/img/22.jpg" class="img-fluid" alt="...">
+                    <img src="assets/img/22.jpg" class="img-fluid" alt="...">
                   </div>
 
                 </div>
@@ -1262,7 +1235,7 @@
       <div class="section_events__item active">
 
         <!-- Bg image -->
-        <div class="section_events__item__bg" style="background-image: url({{ base_path }}{{ active_theme_path() }}/img/8.jpg)"></div>
+        <div class="section_events__item__bg" style="background-image: url(assets/img/8.jpg)"></div>
 
         <!-- Content -->
         <div class="container">
@@ -1334,7 +1307,7 @@
       <div class="section_events__item">
 
         <!-- Bg image -->
-        <div class="section_events__item__bg" style="background-image: url({{ base_path }}{{ active_theme_path() }}/img/9.jpg)"></div>
+        <div class="section_events__item__bg" style="background-image: url(assets/img/9.jpg)"></div>
 
         <!-- Content -->
         <div class="container">
@@ -1406,7 +1379,7 @@
       <div class="section_events__item">
 
         <!-- Bg image -->
-        <div class="section_events__item__bg" style="background-image: url({{ base_path }}{{ active_theme_path() }}/img/10.jpg)"></div>
+        <div class="section_events__item__bg" style="background-image: url(assets/img/10.jpg)"></div>
 
         <!-- Content -->
         <div class="container">
@@ -1604,57 +1577,57 @@
       <div class="row section_gallery__grid">
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/11.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/11.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/11.jpg" data-lightbox="gallery">
+            <img src="assets/img/11.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/16.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/16.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/16.jpg" data-lightbox="gallery">
+            <img src="assets/img/16.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/13.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/13.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/13.jpg" data-lightbox="gallery">
+            <img src="assets/img/13.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/15.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/15.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/15.jpg" data-lightbox="gallery">
+            <img src="assets/img/15.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/14.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/14.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/14.jpg" data-lightbox="gallery">
+            <img src="assets/img/14.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/18.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/18.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/18.jpg" data-lightbox="gallery">
+            <img src="assets/img/18.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/17.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/17.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/17.jpg" data-lightbox="gallery">
+            <img src="assets/img/17.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
         <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
 
-          <a href="{{ base_path }}{{ active_theme_path() }}/img/12.jpg" data-lightbox="gallery">
-            <img src="{{ base_path }}{{ active_theme_path() }}/img/12.jpg" class="img-fluid" alt="...">
+          <a href="assets/img/12.jpg" data-lightbox="gallery">
+            <img src="assets/img/12.jpg" class="img-fluid" alt="...">
           </a>
 
         </div>
